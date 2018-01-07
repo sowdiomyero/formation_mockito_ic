@@ -14,21 +14,12 @@ pipeline {
           }
           post {
             success {
-              junit 'target/surefire-reports/**/*.xml'
+              junit 'target/surefire-reports/*.xml'
             }
 
           }
         }
-    stage('SonarQube Scanner') {
-      steps {
-        script {
-          withSonarQubeEnv('SonarQubeServer') {
-            sh 'mvn clean install sonar:sonar -X -DskipTests'
-          }
-        }
-        
-      }
-    }
+
 
     stage('Integration Tests') {
       steps {
@@ -49,20 +40,7 @@ pipeline {
         }
       }
     }
-    stage('SonarQube Quality Gate') {
-      steps {
-        script {
-          timeout(time: 10, unit: 'MINUTES') {
-            def qg = waitForQualityGate()
-            if (qg.status != 'OK') {
-              error "Pipeline aborted due to quality gate failure: ${qg.status}"
-            }else{
-                manager.addShortText("QA-OK")
-            }
-          }
-        }
-      }
-    }
+
   }
   tools {
     maven 'Maven_3.3.9'
