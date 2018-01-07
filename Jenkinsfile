@@ -47,9 +47,7 @@ pipeline {
   }
   post {
     always {
-      steps {
         sh 'mvn clean'
-      }
     }
   }
   options {
