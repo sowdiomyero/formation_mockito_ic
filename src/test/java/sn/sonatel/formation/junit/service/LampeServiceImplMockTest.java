@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -30,7 +31,7 @@ public class LampeServiceImplMockTest {
     static LampeDao dao;
 
     @BeforeClass
-    public static void setUp() {
+    public static void setUp() throws NullLampeException {
 
         dao = mock(LampeDaoImpl.class);
 
@@ -41,6 +42,8 @@ public class LampeServiceImplMockTest {
         when(dao.rechercher("Salon")).thenReturn(Arrays.asList(l));
         when(dao.rechercher("Chambre01")).thenReturn(Arrays.asList(lc1));
         when(dao.rechercher("Chambre02")).thenReturn(Arrays.asList(lc2));
+
+/*        LampeService spy = Mockito.spy(new LampeServiceImpl(dao));
 
         doAnswer( new Answer<Void>(){
             @Override
@@ -53,7 +56,7 @@ public class LampeServiceImplMockTest {
                 return null;
             }
 
-        }).when(dao).modifier(l);
+        }).when(spy).allumer(l);*/
 
     }
 
